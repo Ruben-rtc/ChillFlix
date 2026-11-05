@@ -4,7 +4,7 @@ ChillFlix — bibliothèque de films connectée à l’API TMDB : recherche, fic
 # Wireframe 
 Figma : [ChillFlix WireFrame](https://www.figma.com/design/djbbP39HLNPu8NNK6hKHQq/ChillFlix-%E2%80%94-Wireframes?node-id=0-1&t=yZKhft32W2b3hpeX-1)
 
-# chillflix-tmp
+# chillflix
 
 This template should help get you started developing with Vue 3 in Vite.
 
