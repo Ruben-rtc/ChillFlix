@@ -1,11 +1,19 @@
-<script setup></script>
+<script setup>
+import AppHeader from '@/components/layout/AppHeader.vue'
+import AppFooter from '@/components/layout/AppFooter.vue'
+</script>
 
 <template>
-  <h1>You did it!</h1>
-  <p>
-    Visit <a href="https://vuejs.org/" target="_blank" rel="noopener">vuejs.org</a> to read the
-    documentation
-  </p>
+  <AppHeader />
+  <main class="app-main">
+    <RouterView />
+  </main>
+  <AppFooter />
 </template>
 
-<style scoped></style>
+<style scoped>
+.app-main {
+  min-height: calc(100vh - var(--header-height));
+  padding-block: var(--space-8) var(--space-16);
+}
+</style>

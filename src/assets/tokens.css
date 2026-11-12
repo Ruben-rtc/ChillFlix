@@ -1,0 +1,69 @@
+/*
+ * Design tokens ChillFlix — valeurs reprises de la charte (Design/ChillFlix — Maquette.pdf).
+ * Utiliser toujours ces variables : var(--cf-red), jamais #D31324 en dur.
+ * Tâche F1 · Sellé : vérifier les valeurs avec la maquette et compléter si besoin.
+ */
+:root {
+  /* Marque & accents */
+  --cf-red: #d31324; /* action principale, onglet actif, page courante */
+  --cf-red-hover: #e21b2e;
+  --cf-red-press: #9d1623;
+  --cf-red-text: #ff5a68; /* liens rouges sur fond sombre (« Tout effacer ») */
+  --cf-star: #f8b42c; /* réservé à l'étoile et aux barres de note */
+
+  /* Fonds & surfaces */
+  --cf-bg: #0b0e13;
+  --cf-header: #0d1015;
+  --cf-surface: #111419;
+  --cf-surface-2: #171a20;
+  --cf-border: #262a32;
+  --cf-border-2: #353a44;
+
+  /* Texte & états */
+  --cf-text: #f4f5f7;
+  --cf-text-2: #b4b9c3;
+  --cf-muted: #8b919c;
+  --cf-error: #ff6b70;
+
+  /* Typographie */
+  --font-title: 'Space Grotesk', system-ui, sans-serif;
+  --font-text: 'Inter', system-ui, sans-serif;
+
+  /* Espacements (base 4 px) */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
+  --space-16: 64px;
+
+  /* Rayons */
+  --radius-tag: 6px;
+  --radius: 10px; /* champs, boutons, cartes */
+  --radius-panel: 16px;
+  --radius-pill: 999px; /* chips */
+
+  /* Mise en page */
+  --header-height: 72px;
+  --container: 1344px;
+  --page-margin: 48px;
+  --gutter: 24px;
+}
+
+/* Tablette : 600 à 1023 px */
+@media (max-width: 1023px) {
+  :root {
+    --page-margin: 32px;
+    --gutter: 20px;
+  }
+}
+
+/* Mobile : moins de 600 px */
+@media (max-width: 599px) {
+  :root {
+    --page-margin: 16px;
+    --gutter: 16px;
+  }
+}

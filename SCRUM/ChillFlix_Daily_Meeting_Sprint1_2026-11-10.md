@@ -4,7 +4,7 @@
 |---|---|
 | **Date** | 10.11.2026 |
 | **Scrum master** | Ruben ten Cate |
-| **Participants** | Arthur, Ruben, Scellé |
+| **Participants** | Arthur, Ruben, Sellé |
 | **Durée** | ~5 min |
 
 ---
@@ -24,7 +24,7 @@
 ### Ruben
 
 - **Fait**
-  - Wireframe réalisé sur Figma et Canva, à partir de la première version de Scellé
+  - Wireframe réalisé sur Figma et Canva, à partir de la première version de Sellé
   - Création du dépôt GitHub avec deux branches : `main` et `develop`
   - Projet Vue.js initialisé (avec son architecture) dans `develop`
 - **Difficultés** : aucune
@@ -32,7 +32,7 @@
   - Monter en compétence sur Vue.js
   - Éventuellement démarrer une première user story
 
-### Scellé
+### Sellé
 
 - **Fait**
   - Maquette du site (ensemble des pages) et première version du wireframe
@@ -44,7 +44,7 @@
 ### Décisions de l'équipe
 
 - **Git** : toute nouvelle branche part de `develop`, jamais de `main`.
-- **Maquette** : Scellé produit la maquette en couleurs à partir du wireframe ; l'équipe en a besoin pour avancer sur le front.
+- **Maquette** : Sellé produit la maquette en couleurs à partir du wireframe ; l'équipe en a besoin pour avancer sur le front.
 - **`design.md`** : créer un fichier Markdown de référence (couleurs, espacements, etc.), utile aussi pour travailler avec l'IA.
 - **Composants** : découper les pages en composants pour pouvoir travailler à plusieurs sur une même page.
 - **En attendant la maquette** : chacun approfondit Vue.js.
