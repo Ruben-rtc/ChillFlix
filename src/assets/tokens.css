@@ -1,7 +1,7 @@
 /*
  * Design tokens ChillFlix — valeurs reprises de la charte (Design/ChillFlix — Maquette.pdf).
  * Utiliser toujours ces variables : var(--cf-red), jamais #D31324 en dur.
- * Tâche F1 · Sellé : vérifier les valeurs avec la maquette et compléter si besoin.
+ * Tâche F1 · Sellé.
  */
 :root {
   /* Marque & accents */
@@ -66,4 +66,17 @@
     --page-margin: 16px;
     --gutter: 16px;
   }
+}
+
+/* Base : fond sombre, texte en Inter, titres en Space Grotesk */
+body {
+  background: var(--cf-bg);
+  color: var(--cf-text);
+  font-family: var(--font-text);
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-title);
 }
