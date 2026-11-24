@@ -14,29 +14,57 @@
  * @property {number[]} genreIds
  * @property {string} releaseDate   ex. '2021-09-15'
  */
-// oxlint-disable-next-line no-unused-vars -- à enlever quand la tâche TODO est faite
 import { tmdb } from './tmdb'
+
+/** TMDB refuse les pages au-delà de 500, même si total_pages est plus grand. */
+const MAX_PAGES = 500
 
 /**
  * Transforme un film renvoyé par TMDB dans le format commun.
  * Tâche R2 · Arthur
  * @returns {MovieCard}
  */
-// oxlint-disable-next-line no-unused-vars -- à enlever quand la tâche TODO est faite
 export function toMovieCard(movie) {
-  // TODO R2 : retourner { id, type: 'movie', title, year, posterPath, rating, voteCount, popularity, genreIds, releaseDate }
-  throw new Error('toMovieCard : tâche R2 pas encore faite')
+  const releaseDate = movie.release_date ?? ''
+
+  return {
+    id: movie.id,
+    type: 'movie',
+    title: movie.title,
+    year: releaseDate.slice(0, 4),
+    posterPath: movie.poster_path ?? null,
+    rating: movie.vote_average ?? 0,
+    voteCount: movie.vote_count ?? 0,
+    popularity: movie.popularity ?? 0,
+    genreIds: movie.genre_ids ?? [],
+    releaseDate,
+  }
 }
 
 /**
  * Recherche des films par texte (/search/movie).
  * Tâche R2 · Arthur
+ * @param {string} query  texte recherché
+ * @param {number} [page=1]
  * @returns {Promise<{ results: MovieCard[], totalResults: number, totalPages: number }>}
  */
-// oxlint-disable-next-line no-unused-vars -- à enlever quand la tâche TODO est faite
 export async function searchMovies(query, page = 1) {
-  // TODO R2 : await tmdb.get('/search/movie', { params: { query, page } }) puis toMovieCard sur chaque résultat
-  throw new Error('searchMovies : tâche R2 pas encore faite')
+  const text = (query ?? '').trim()
+
+  // Pas de texte : inutile d'appeler TMDB.
+  if (!text) {
+    return { results: [], totalResults: 0, totalPages: 0 }
+  }
+
+  const { data } = await tmdb.get('/search/movie', {
+    params: { query: text, page },
+  })
+
+  return {
+    results: data.results.map(toMovieCard),
+    totalResults: data.total_results,
+    totalPages: Math.min(data.total_pages, MAX_PAGES),
+  }
 }
 
 /**
