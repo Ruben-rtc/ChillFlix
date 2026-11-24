@@ -4,16 +4,24 @@ import AppFooter from '@/components/layout/AppFooter.vue'
 </script>
 
 <template>
-  <AppHeader />
-  <main class="app-main">
-    <RouterView />
-  </main>
-  <AppFooter />
+  <div class="app">
+    <AppHeader />
+    <main class="app-main">
+      <RouterView />
+    </main>
+    <AppFooter />
+  </div>
 </template>
 
 <style scoped>
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
 .app-main {
-  min-height: calc(100vh - var(--header-height));
+  flex: 1;
   padding-block: var(--space-8) var(--space-16);
 }
 </style>
