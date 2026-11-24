@@ -14,6 +14,22 @@ npm run dev
 
 Jeton TMDB : themoviedb.org > Paramètres > API > « Jeton d'accès en lecture à l'API ».
 
+# Règles de l'équipe
+
+- **Une branche par tâche**, nommée `feature/<code>-<sujet>` (ex. `feature/r6-media-card`).
+- **Toujours partir de `develop`**, jamais de `main` : `git checkout develop && git pull && git checkout -b feature/<code>-<sujet>`.
+- **Pull request vers `develop`**, relue par quelqu'un d'autre avant le merge.
+- **Jamais de push direct sur `main`.**
+- Style (couleurs, polices, espacements, états) : voir [`design.md`](design.md). Toujours `var(--cf-…)`, jamais de valeur en dur.
+
+## Format commun d'un film
+
+Utilisé par les cartes, la grille et les carrousels (les composants ne voient jamais le format brut de TMDB) :
+
+```js
+{ id, type: 'movie', title, year, posterPath, rating, popularity }
+```
+
 # Architecture
 
 Chaque composant est un fichier séparé, avec en haut son code de tâche iceScrum, son responsable et ses props.
