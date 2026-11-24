@@ -7,10 +7,18 @@
  * ne rien faire si le texte est vide ; croix d'effacement ; préremplir avec route.query.q.
  */
 import { ref } from 'vue'
+import { useRouter } from 'vue-router' // Import pour searchbar
+
+const router = useRouter()
 const searchText = ref('')
 const onSubmit = () => {
-  console.log(searchText.value)
+  const query = searchText.value.trim() // nettoyer les espaces si il y a en a dans la barre de recherche
+    if (!query) {                       // si il n'y a rien dans la recherche, ne rien faire
+      return
+    }
+  router.push({ path: '/recherche', query : { q: query} })
 }
+
 </script>
 
 <template>
