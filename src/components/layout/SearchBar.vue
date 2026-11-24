@@ -6,10 +6,11 @@
  * TODO R4 : v-model sur le texte ; Entrée → router.push({ path: '/recherche', query: { q } }) ;
  * ne rien faire si le texte est vide ; croix d'effacement ; préremplir avec route.query.q.
  */
-import { ref } from 'vue'
-import { useRouter } from 'vue-router' // Import pour searchbar
+import { ref, watch } from 'vue'
+import { useRouter, useRoute } from 'vue-router' // Import pour searchbar
 
 const router = useRouter()
+const route = useRoute()
 const searchText = ref('')
 const onSubmit = () => {
   const query = searchText.value.trim() // nettoyer les espaces si il y a en a dans la barre de recherche
@@ -19,6 +20,14 @@ const onSubmit = () => {
   }
   router.push({ path: '/recherche', query: { q: query } })
 }
+// Préremplir le champ avec la recherche de l'adresse (/recherche?q=dune)
+watch(
+  () => route.query.q,
+  (nouveauQ) => {
+    searchText.value = nouveauQ ?? ''
+  },
+  { immediate: true },
+)
 </script>
 
 <template>
