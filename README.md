@@ -1,18 +1,91 @@
 # ChillFlix
-ChillFlix — bibliothèque de films et séries connectée à l’API TMDB : recherche, filtres, tri et fiches détaillées.
 
-# Wireframe 
-Figma : [ChillFlix WireFrame](https://www.figma.com/design/djbbP39HLNPu8NNK6hKHQq/ChillFlix-%E2%80%94-Wireframes?node-id=0-1&t=yZKhft32W2b3hpeX-1)
+ChillFlix est une application web pour trouver un film et tout savoir sur lui. Elle utilise l'API de [TMDB](https://www.themoviedb.org/) : on cherche un film par son titre, on affine avec des filtres et un tri, puis on ouvre sa fiche (synopsis, bande-annonce, distribution, recommandations). Projet frontend Vue 3 réalisé au CPNV.
 
-# Démarrer
+<!-- TODO Z2 : ajouter une capture d'écran quand l'application est finie, par ex. :
+![Page de résultats de ChillFlix](doc/capture-resultats.png) -->
+
+## Fonctionnalités
+
+<!-- TODO Z2 : vérifier cette liste à la fin du sprint 2 -->
+
+- **Recherche** de films par titre, avec pagination des résultats.
+- **Filtres** par genre et par année.
+- **Tri** par pertinence, note, date de sortie ou titre.
+- **Fiche d'un film** : affiche, synopsis, durée, genres, note, bande-annonce, distribution et films recommandés.
+- **Adresse partageable** : la recherche, les filtres, le tri et la page sont dans l'URL.
+- Messages clairs quand il n'y a **aucun résultat** ou quand **TMDB ne répond pas**.
+- Affichage adapté à l'ordinateur, à la tablette et au mobile.
+
+# Installation
+
+## Prérequis
+
+- [Node.js](https://nodejs.org/) 22.18 ou plus récent (voir `engines` dans `package.json`), avec npm.
+- Un compte gratuit sur [themoviedb.org](https://www.themoviedb.org/signup) pour obtenir un jeton d'API.
+
+## 1. Installer les dépendances
 
 ```shell
 npm install
-cp .env.example .env.local   # puis coller le jeton TMDB dans .env.local (jamais commité)
+```
+
+## 2. Créer le fichier `.env.local` avec le jeton TMDB
+
+Copier le modèle :
+
+```shell
+cp .env.example .env.local      # macOS, Linux, PowerShell
+copy .env.example .env.local    # invite de commandes Windows (cmd)
+```
+
+Puis récupérer le jeton : themoviedb.org > Paramètres > API > « Jeton d'accès en lecture à l'API » (une longue chaîne qui commence par `eyJ`), et le coller dans `.env.local` :
+
+```shell
+VITE_TMDB_TOKEN=eyJ...
+```
+
+`.env.local` n'est **jamais commité** (il est dans `.gitignore`) : chacun utilise son propre jeton.
+
+## 3. Lancer l'application
+
+```shell
 npm run dev
 ```
 
-Jeton TMDB : themoviedb.org > Paramètres > API > « Jeton d'accès en lecture à l'API ».
+Puis ouvrir l'adresse affichée dans le terminal (en général <http://localhost:5173>).
+
+Si les films ne s'affichent pas et que la console du navigateur montre une erreur 401, le jeton est absent ou incorrect dans `.env.local`. Relancer `npm run dev` après l'avoir corrigé.
+
+## Commandes utiles
+
+| Commande | Rôle |
+| --- | --- |
+| `npm run dev` | Lance le site en développement, avec rechargement automatique |
+| `npm run build` | Construit la version de production dans `dist/` |
+| `npm run preview` | Affiche localement la version construite par `build` |
+| `npm run test:unit` | Lance les tests Vitest (`src/__tests__/`) en mode surveillance |
+| `npx vitest run` | Lance les tests une seule fois |
+| `npm run lint` | Vérifie et corrige le code (oxlint puis ESLint) |
+| `npm run format` | Formate le code de `src/` avec Prettier |
+
+## Outils conseillés
+
+- [VS Code](https://code.visualstudio.com/) avec l'extension [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar).
+- L'extension navigateur [Vue.js devtools](https://devtools.vuejs.org/) pour voir les composants et le store Pinia.
+
+# Équipe
+
+<!-- TODO Z2 : compléter avec les noms de famille si on veut -->
+
+| Membre | Rôle principal |
+| --- | --- |
+| Ruben | Logique de recherche : API, stores, URL, filtres et tri |
+| Arthur | Fiches de film, requêtes TMDB, README et tests |
+| Sellé | Maquette et composants visuels réutilisables |
+
+# Wireframe 
+Figma : [ChillFlix WireFrame](https://www.figma.com/design/djbbP39HLNPu8NNK6hKHQq/ChillFlix-%E2%80%94-Wireframes?node-id=0-1&t=yZKhft32W2b3hpeX-1)
 
 # Règles de l'équipe
 
@@ -27,7 +100,7 @@ Jeton TMDB : themoviedb.org > Paramètres > API > « Jeton d'accès en lecture �
 Utilisé par les cartes, la grille et les carrousels (les composants ne voient jamais le format brut de TMDB) :
 
 ```js
-{ id, type: 'movie', title, year, posterPath, rating, popularity }
+{ id, type: 'movie', title, year, posterPath, rating, voteCount, popularity, genreIds, releaseDate }
 ```
 
 # Architecture
@@ -56,54 +129,3 @@ src/
 - **Format commun d'un film** (cartes, grille, carrousels) : voir `src/api/search.js`. Format de la fiche : `src/api/movies.js`.
 - **L'URL est la source de vérité** de la recherche : `/recherche?q=dune&genre=878&annee=2021&tri=rating&page=2`.
 - **Couleurs** : toujours `var(--cf-…)` de `tokens.css`, jamais de valeur en dur.
-
-# chillflix
-
-This template should help get you started developing with Vue 3 in Vite.
-
-## Recommended IDE Setup
-
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
-
-## Recommended Browser Setup
-
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vite.dev/config/).
-
-## Project Setup
-
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
-npm run build
-```
-
-### Run Unit Tests with [Vitest](https://vitest.dev/)
-
-```sh
-npm run test:unit
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
