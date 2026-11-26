@@ -1,4 +1,4 @@
-<script setup>
+<script>
 /**
  * BaseCarousel — rangée horizontale avec flèches, réutilisée pour les acteurs et les recommandations.
  * Tâche M7 · Sellé
@@ -6,9 +6,12 @@
  * Props : items — Slot : chaque élément, ex. <BaseCarousel :items="x" v-slot="{ item }">…</BaseCarousel>
  * TODO M7 : overflow-x: auto + scroll-snap ; flèches gauche/droite (scrollBy) cachées sur mobile.
  */
-defineProps({
-  items: { type: Array, required: true },
-})
+export default {
+  name: 'BaseCarousel',
+  props: {
+    items: { type: Array, required: true },
+  },
+}
 </script>
 
 <template>

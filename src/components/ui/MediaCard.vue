@@ -1,21 +1,102 @@
-<script setup>
+<script>
 /**
  * MediaCard — carte d'un film : affiche 2:3, titre, année, note.
  * Tâche R6 · Sellé
  *
  * Props : item (format MovieCard, voir src/api/search.js)
- * TODO R6 : toute la carte = <RouterLink :to="`/film/${item.id}`"> ; affiche avec tmdbImage(item.posterPath)
- * (src/utils/image.js), image par défaut si null ; titre sur 1 ligne tronquée ; étoile var(--cf-star).
  */
-defineProps({
-  item: { type: Object, required: true },
-})
+import { tmdbImage } from '@/utils/image'
+import noPoster from '@/assets/no-poster.svg'
+
+export default {
+  name: 'MediaCard',
+
+  props: {
+    item: { type: Object, required: true },
+  },
+
+  computed: {
+    // Adresse de l'affiche, ou image par défaut s'il n'y en a pas
+    poster() {
+      return tmdbImage(this.item.posterPath) ?? noPoster
+    },
+
+    // Note avec une décimale (7.8), ou null si TMDB n'en donne pas
+    rating() {
+      return typeof this.item.rating === 'number' ? this.item.rating.toFixed(1) : null
+    },
+  },
+}
 </script>
 
 <template>
-  <RouterLink :to="`/film/${item.id}`" class="stub">
-    MediaCard — {{ item.title }} ({{ item.year }}) · {{ item.rating }}
+  <RouterLink :to="`/film/${item.id}`" class="media-card">
+    <img class="poster" :src="poster" :alt="item.title" loading="lazy" />
+    <div class="info">
+      <p class="title" :title="item.title">{{ item.title }}</p>
+      <p class="meta">
+        <span v-if="item.year">{{ item.year }}</span>
+        <template v-if="rating">
+          <span v-if="item.year" aria-hidden="true">·</span>
+          <svg class="star" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
+            <path
+              fill="currentColor"
+              d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+            />
+          </svg>
+          <span>{{ rating }}</span>
+        </template>
+      </p>
+    </div>
   </RouterLink>
 </template>
 
-<style scoped></style>
+<style scoped>
+.media-card {
+  display: block;
+  min-width: 0;
+  color: var(--cf-text);
+  text-decoration: none;
+  outline: none;
+}
+
+.poster {
+  display: block;
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  border-radius: var(--radius);
+  background: var(--cf-surface-2);
+}
+
+.media-card:hover .poster,
+.media-card:focus-visible .poster {
+  outline: 2px solid #fff;
+  outline-offset: 0;
+}
+
+.info {
+  padding-top: var(--space-2);
+}
+
+.title {
+  margin: 0;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  margin: var(--space-1) 0 0;
+  font-size: 14px;
+  color: var(--cf-text-2);
+}
+
+.star {
+  color: var(--cf-star);
+}
+</style>

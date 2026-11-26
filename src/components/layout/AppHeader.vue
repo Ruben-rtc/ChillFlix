@@ -1,12 +1,22 @@
-<script setup>
+<script>
 /**
  * AppHeader — barre du haut, collée en haut au défilement (72 px).
  * Tâche F4 · Sellé
  *
- * Logo ChillFlix à gauche (lien vers '/'), emplacement de la recherche au centre,
+ * Logo ChillFlix à gauche (lien vers '/'), recherche au centre (SearchBar, tâche R4 · Ruben),
  * bouton rond « Mon compte » (décoratif) à droite. Pas de lien « Ma collection ».
  */
+import SearchBar from '@/components/layout/SearchBar.vue'
+
+export default {
+  name: 'AppHeader',
+  components: { SearchBar },
+}
 </script>
+
+/** * AppHeader — barre du haut, collée en haut au défilement (72 px). * Tâche F4 · Sellé * * Logo
+ChillFlix à gauche (lien vers '/'), emplacement de la recherche au centre, * bouton rond « Mon
+compte » (décoratif) à droite. Pas de lien « Ma collection ». */
 
 <template>
   <header class="app-header">
@@ -15,8 +25,7 @@
         ChillFlix
       </RouterLink>
 
-      <!-- Emplacement de <SearchBar /> : Ruben l'ajoute en R4 -->
-      <div class="app-header__search"></div>
+      <div class="app-header__search"><SearchBar /></div>
 
       <button type="button" class="app-header__account" aria-label="Mon compte">
         <svg
