@@ -15,7 +15,11 @@ const router = createRouter({
       component: () => import('../views/MovieView.vue'),
       props: true,
     },
-    { path: '/:pathMatch(.*)*', name: 'not-found', component: () => import('../views/NotFoundView.vue') },
+    {
+      path: '/:pathMatch(.*)*',
+      name: 'not-found',
+      component: () => import('../views/NotFoundView.vue'),
+    },
   ],
   scrollBehavior(to, from, savedPosition) {
     // Retour navigateur : revenir où on était. Ancre (#distribution) : y descendre sous le header.

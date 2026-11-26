@@ -32,7 +32,26 @@ export default {
     ...mapStores(useSearchStore), // donne this.searchStore
   },
 
-  // TODO R3 · Ruben : lire this.$route.query (q, page, genre, annee, tri), les copier dans le store,
+  // l'option' watch surveille l'adresse du navigateur, il surveille ce qu'il y a après le ? dans l'adresse
+  watch: {
+    '$route.query': {
+      handler(newQuery) {
+        // 1. Le texte cherché (vide si il n'y a pas de q dans l'adresse)
+        this.searchStore.query = newQuery.q ?? '' // ?? si ça n'existe pas, alors pas de texte dans la barre de recherche
+
+        // 2. La page en nombre (1 s'il n'y a en a pas)
+        this.searchStore.page = Number(newQuery.page) || 1 // transforme la page de l'adresse en nombre. Si ce n'est pas un nombre valide, ou s'il n'y a pas de page, prends 1
+
+        // 3. Recherche vide : on ne fait rien
+        if (!this.searchStore.query) return
+
+        // 4. Sinon : on charge les films
+        this.searchStore.fetchResults()
+      },
+      immediate: true, // Vue exécute le handler une première fois quand la page se crée
+    },
+  },
+
   // appeler this.searchStore.fetchResults(), et recommencer à chaque changement de l'URL
   // (option watch sur '$route.query', avec immediate: true).
 

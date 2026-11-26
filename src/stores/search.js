@@ -6,7 +6,7 @@
  * Tâche F5 · Ruben (forme du store) — R3, FI4, T1/T2 pour les actions.
  */
 import { defineStore } from 'pinia'
-import { mockMovies } from '@/mocks/movies'
+import { searchMovies } from '@/api/search'
 
 export const useSearchStore = defineStore('search', {
   state: () => ({
@@ -16,9 +16,9 @@ export const useSearchStore = defineStore('search', {
     sort: null, // null = défaut (pertinence avec texte, popularité sans texte)
     page: 1,
     // TODO R3 : remplacer les fausses données par [] quand fetchResults marche
-    results: mockMovies,
-    totalResults: mockMovies.length,
-    totalPages: 1,
+    results: [],
+    totalResults: 0,
+    totalPages: 0,
     loading: false,
     error: null,
   }),
@@ -28,10 +28,25 @@ export const useSearchStore = defineStore('search', {
   },
 
   actions: {
-    /** Tâche R3 · Ruben (puis FI4 et T1/T2 pour les filtres et le tri) */
     async fetchResults() {
-      // TODO R3 : loading = true ; appeler searchMovies (ou discoverMovies sans texte) ;
-      // remplir results / totalResults / totalPages ; en cas d'erreur, error = message ; loading = false
+      this.loading = true
+      this.error = null
+
+      try {
+        // Appel à TMDB : on attend la réponse avant de continuer
+        const response = await searchMovies(this.query, this.page) //Action Pinia, l'état s'apelle this avec les 2 arguments de la fonction
+
+        // ranger la réponse dans le store
+        this.results = response.results
+        this.totalResults = response.totalResults
+        this.totalPages = response.totalPages
+      } catch (e) {
+        // attraper l'erreur, on garde le message pour ErrorState
+        this.error = e.message
+      } finally {
+        // Dans tous les cas le chargement est terminé
+        this.loading = false
+      }
     },
 
     /** Tâche FI4 · Ruben — appelé par « Tout effacer » et « Réinitialiser les filtres » */
