@@ -1,33 +1,40 @@
-<script setup>
+<script>
 /**
  * SearchBar — champ de recherche dans le header.
  * Tâche R4 · Ruben
  *
- * TODO R4 : v-model sur le texte ; Entrée → router.push({ path: '/recherche', query: { q } }) ;
- * ne rien faire si le texte est vide ; croix d'effacement ; préremplir avec route.query.q.
+ * Entrée → /recherche?q=… ; rien si le texte est vide ; croix d'effacement ;
+ * champ prérempli avec le q de l'adresse.
  */
-import { ref, watch } from 'vue'
-import { useRouter, useRoute } from 'vue-router' // Import pour searchbar
+export default {
+  name: 'SearchBar',
 
-const router = useRouter()
-const route = useRoute()
-const searchText = ref('')
-const onSubmit = () => {
-  const query = searchText.value.trim() // nettoyer les espaces si il y a en a dans la barre de recherche
-  if (!query) {
-    // si il n'y a rien dans la recherche, ne rien faire
-    return
-  }
-  router.push({ path: '/recherche', query: { q: query } })
-}
-// Préremplir le champ avec la recherche de l'adresse (/recherche?q=dune)
-watch(
-  () => route.query.q,
-  (nouveauQ) => {
-    searchText.value = nouveauQ ?? ''
+  // Les données du composant : le texte tapé dans le champ
+  data() {
+    return {
+      searchText: '',
+    }
   },
-  { immediate: true },
-)
+
+  // Les fonctions du composant
+  methods: {
+    onSubmit() {
+      const query = this.searchText.trim() // enlève les espaces au début et à la fin
+      if (!query) return // champ vide : on ne fait rien
+      this.$router.push({ path: '/recherche', query: { q: query } })
+    },
+  },
+
+  // Surveille le q de l'adresse pour préremplir le champ
+  watch: {
+    '$route.query.q': {
+      handler(nouveauQ) {
+        this.searchText = nouveauQ ?? ''
+      },
+      immediate: true, // aussi au chargement de la page
+    },
+  },
+}
 </script>
 
 <template>
