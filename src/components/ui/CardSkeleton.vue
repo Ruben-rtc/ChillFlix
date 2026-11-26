@@ -1,8 +1,11 @@
-<script setup>
+<script>
 /**
  * CardSkeleton — carte grise de la taille d'une MediaCard, affichée pendant le chargement.
  * Tâche R6 · Sellé
  */
+export default {
+  name: 'CardSkeleton',
+}
 </script>
 
 <template>

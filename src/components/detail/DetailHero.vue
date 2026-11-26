@@ -1,4 +1,4 @@
-<script setup>
+<script>
 /**
  * DetailHero — haut de la fiche : image de fond, affiche, titre, année, durée, genres, note, synopsis.
  * Tâche M3 · Arthur
@@ -7,9 +7,12 @@
  * TODO M3 : fond tmdbImage(movie.backdropPath, 'w1280') ; visuels par défaut si une info manque ;
  * sur mobile l'affiche chevauche le bas du fond.
  */
-defineProps({
-  movie: { type: Object, required: true },
-})
+export default {
+  name: 'DetailHero',
+  props: {
+    movie: { type: Object, required: true },
+  },
+}
 </script>
 
 <template>

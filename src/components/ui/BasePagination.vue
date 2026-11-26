@@ -1,88 +1,94 @@
-<script setup>
+<script>
 /**
  * BasePagination — Précédent / numéros de page / Suivant.
  * Tâche R8 · Arthur
  *
  * Props : page, totalPages — Événement : change(nouvellePage)
  */
-import { computed } from 'vue'
+export default {
+  name: 'BasePagination',
 
-const props = defineProps({
-  page: { type: Number, required: true },
-  totalPages: { type: Number, required: true },
-})
+  props: {
+    page: { type: Number, required: true },
+    totalPages: { type: Number, required: true },
+  },
 
-const emit = defineEmits(['change'])
+  emits: ['change'],
 
-function goTo(n) {
-  if (n < 1 || n > props.totalPages || n === props.page) return
-  emit('change', n)
+  computed: {
+    /**
+     * Numéros à afficher : toujours la première et la dernière page,
+     * plus la page actuelle et ses voisines. Un trou de plusieurs pages devient « … ».
+     * Ex. page 5 sur 20 → [1, '…', 4, 5, 6, '…', 20]
+     */
+    items() {
+      const total = this.totalPages
+      const current = this.page
+
+      // 1. Les pages qu'on veut voir : la première, la page actuelle et ses voisines, la dernière
+      const wanted = [1, current - 1, current, current + 1, total]
+
+      // 2. On garde seulement les pages qui existent, sans doublon
+      const pages = []
+      for (let i = 0; i < wanted.length; i++) {
+        const n = wanted[i]
+        const existe = n >= 1 && n <= total
+        const dejaAjoutee = pages.includes(n)
+        if (existe && !dejaAjoutee) {
+          pages.push(n)
+        }
+      }
+
+      // 3. On les trie dans l'ordre croissant
+      pages.sort(function (a, b) {
+        return a - b
+      })
+
+      // 4. On ajoute « … » là où il manque des pages
+      const result = []
+      let previous = 0
+      for (let i = 0; i < pages.length; i++) {
+        const n = pages[i]
+        const ecart = n - previous
+
+        if (ecart === 2) {
+          // Une seule page manquante : on l'affiche plutôt que « … »
+          result.push(previous + 1)
+        } else if (ecart > 2) {
+          // Plusieurs pages manquantes : on les remplace par « … »
+          result.push('…')
+        }
+
+        result.push(n)
+        previous = n
+      }
+
+      return result
+    },
+
+    /** « Précédent » est inutile sur la première page. */
+    isFirstPage() {
+      return this.page <= 1
+    },
+
+    /** « Suivant » est inutile sur la dernière page. */
+    isLastPage() {
+      return this.page >= this.totalPages
+    },
+  },
+
+  methods: {
+    goTo(n) {
+      if (n < 1 || n > this.totalPages || n === this.page) return
+      this.$emit('change', n)
+    },
+
+    /** Vrai si ce numéro est la page affichée. */
+    isCurrent(item) {
+      return item === this.page
+    },
+  },
 }
-
-/**
- * Numéros à afficher : toujours la première et la dernière page,
- * plus la page actuelle et ses voisines. Un trou de plusieurs pages devient « … ».
- * Ex. page 5 sur 20 → [1, '…', 4, 5, 6, '…', 20]
- */
-const items = computed(function () {
-  const total = props.totalPages
-  const current = props.page
-
-  // 1. Les pages qu'on veut voir : la première, la page actuelle et ses voisines, la dernière
-  const wanted = [1, current - 1, current, current + 1, total]
-
-  // 2. On garde seulement les pages qui existent, sans doublon
-  const pages = []
-  for (let i = 0; i < wanted.length; i++) {
-    const n = wanted[i]
-    const existe = n >= 1 && n <= total
-    const dejaAjoutee = pages.includes(n)
-    if (existe && !dejaAjoutee) {
-      pages.push(n)
-    }
-  }
-
-  // 3. On les trie dans l'ordre croissant
-  pages.sort(function (a, b) {
-    return a - b
-  })
-
-  // 4. On ajoute « … » là où il manque des pages
-  const result = []
-  let previous = 0
-  for (let i = 0; i < pages.length; i++) {
-    const n = pages[i]
-    const ecart = n - previous
-
-    if (ecart === 2) {
-      // Une seule page manquante : on l'affiche plutôt que « … »
-      result.push(previous + 1)
-    } else if (ecart > 2) {
-      // Plusieurs pages manquantes : on les remplace par « … »
-      result.push('…')
-    }
-
-    result.push(n)
-    previous = n
-  }
-
-  return result
-})
-
-/** Vrai si ce numéro est la page affichée. */
-function isCurrent(item) {
-  return item === props.page
-}
-
-/** « Précédent » est inutile sur la première page. */
-const isFirstPage = computed(function () {
-  return props.page <= 1
-})
-
-/** « Suivant » est inutile sur la dernière page. */
-const isLastPage = computed(function () {
-  return props.page >= props.totalPages
-})
 </script>
 
 <template>
@@ -115,12 +121,7 @@ const isLastPage = computed(function () {
       </li>
 
       <li>
-        <button
-          type="button"
-          class="pagination-btn"
-          :disabled="isLastPage"
-          @click="goTo(page + 1)"
-        >
+        <button type="button" class="pagination-btn" :disabled="isLastPage" @click="goTo(page + 1)">
           Suivant
         </button>
       </li>

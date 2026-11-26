@@ -1,22 +1,32 @@
-<script setup>
+<script>
 /**
  * MediaCard — carte d'un film : affiche 2:3, titre, année, note.
  * Tâche R6 · Sellé
  *
  * Props : item (format MovieCard, voir src/api/search.js)
  */
-import { computed } from 'vue'
 import { tmdbImage } from '@/utils/image'
 import noPoster from '@/assets/no-poster.svg'
 
-const props = defineProps({
-  item: { type: Object, required: true },
-})
+export default {
+  name: 'MediaCard',
 
-const poster = computed(() => tmdbImage(props.item.posterPath) ?? noPoster)
-const rating = computed(() =>
-  typeof props.item.rating === 'number' ? props.item.rating.toFixed(1) : null,
-)
+  props: {
+    item: { type: Object, required: true },
+  },
+
+  computed: {
+    // Adresse de l'affiche, ou image par défaut s'il n'y en a pas
+    poster() {
+      return tmdbImage(this.item.posterPath) ?? noPoster
+    },
+
+    // Note avec une décimale (7.8), ou null si TMDB n'en donne pas
+    rating() {
+      return typeof this.item.rating === 'number' ? this.item.rating.toFixed(1) : null
+    },
+  },
+}
 </script>
 
 <template>

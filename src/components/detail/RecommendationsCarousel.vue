@@ -1,4 +1,4 @@
-<script setup>
+<script>
 /**
  * RecommendationsCarousel — films recommandés, en MediaCard dans un BaseCarousel.
  * Tâche M8 · Sellé
@@ -9,9 +9,13 @@
 import BaseCarousel from '@/components/ui/BaseCarousel.vue'
 import MediaCard from '@/components/ui/MediaCard.vue'
 
-defineProps({
-  movies: { type: Array, required: true },
-})
+export default {
+  name: 'RecommendationsCarousel',
+  components: { BaseCarousel, MediaCard },
+  props: {
+    movies: { type: Array, required: true },
+  },
+}
 </script>
 
 <template>

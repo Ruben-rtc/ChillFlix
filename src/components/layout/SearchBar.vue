@@ -16,15 +16,6 @@ export default {
     }
   },
 
-  // Les fonctions du composant
-  methods: {
-    onSubmit() {
-      const query = this.searchText.trim() // enlève les espaces au début et à la fin
-      if (!query) return // champ vide : on ne fait rien
-      this.$router.push({ path: '/recherche', query: { q: query } })
-    },
-  },
-
   // Surveille le q de l'adresse pour préremplir le champ
   watch: {
     '$route.query.q': {
@@ -32,6 +23,15 @@ export default {
         this.searchText = nouveauQ ?? ''
       },
       immediate: true, // aussi au chargement de la page
+    },
+  },
+
+  // Les fonctions du composant
+  methods: {
+    onSubmit() {
+      const query = this.searchText.trim() // enlève les espaces au début et à la fin
+      if (!query) return // champ vide : on ne fait rien
+      this.$router.push({ path: '/recherche', query: { q: query } })
     },
   },
 }

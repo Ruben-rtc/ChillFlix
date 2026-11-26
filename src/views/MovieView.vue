@@ -1,10 +1,9 @@
-<script setup>
+<script>
 /**
  * Fiche d'un film : /film/:id
  * Cette page ASSEMBLE seulement : chaque morceau est un composant avec sa propre tâche.
  * Tâche M2 · Arthur : chargement, erreur, « Film introuvable ».
  */
-import { ref } from 'vue'
 import { mockMovie } from '@/mocks/movie'
 import DetailBreadcrumb from '@/components/detail/DetailBreadcrumb.vue'
 import DetailHero from '@/components/detail/DetailHero.vue'
@@ -14,19 +13,37 @@ import TrailerPlayer from '@/components/detail/TrailerPlayer.vue'
 import CastCarousel from '@/components/detail/CastCarousel.vue'
 import RecommendationsCarousel from '@/components/detail/RecommendationsCarousel.vue'
 
-defineProps({
-  id: { type: String, required: true }, // vient de l'URL /film/:id
-})
+export default {
+  name: 'MovieView',
 
-// TODO M2 · Arthur : remplacer la fausse fiche par getMovie(props.id) (src/api/movies.js),
-// gérer loading / erreur / « Film introuvable », et recharger quand l'id change (watch).
-const movie = ref(mockMovie)
+  components: {
+    DetailBreadcrumb,
+    DetailHero,
+    BaseTabs,
+    OverviewSection,
+    TrailerPlayer,
+    CastCarousel,
+    RecommendationsCarousel,
+  },
 
-const tabs = [
-  { id: 'apercu', label: 'Aperçu' },
-  { id: 'distribution', label: 'Distribution' },
-  { id: 'recommandations', label: 'Recommandations' },
-]
+  props: {
+    id: { type: String, required: true }, // vient de l'URL /film/:id
+  },
+
+  data() {
+    return {
+      // TODO M2 · Arthur : remplacer la fausse fiche par getMovie(this.id) (src/api/movies.js),
+      // gérer loading / erreur / « Film introuvable », et recharger quand l'id change (watch).
+      movie: mockMovie,
+
+      tabs: [
+        { id: 'apercu', label: 'Aperçu' },
+        { id: 'distribution', label: 'Distribution' },
+        { id: 'recommandations', label: 'Recommandations' },
+      ],
+    }
+  },
+}
 </script>
 
 <template>

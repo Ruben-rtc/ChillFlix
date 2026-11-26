@@ -1,4 +1,4 @@
-<script setup>
+<script>
 /**
  * EmptyState — « Aucun résultat » + bouton « Réinitialiser les filtres ».
  * Tâche R9 · Arthur
@@ -6,10 +6,14 @@
  * Affiché par SearchView quand la recherche est terminée et ne renvoie aucun film.
  * Événement : reset
  */
-const emit = defineEmits(['reset'])
-
-function onResetClick() {
-  emit('reset')
+export default {
+  name: 'EmptyState',
+  emits: ['reset'],
+  methods: {
+    onResetClick() {
+      this.$emit('reset')
+    },
+  },
 }
 </script>
 

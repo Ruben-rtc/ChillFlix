@@ -1,4 +1,4 @@
-<script setup>
+<script>
 /**
  * BaseTabs — onglets de la fiche, collés sous le header au défilement.
  * Tâche M5 · Sellé
@@ -7,9 +7,12 @@
  * TODO M5 : liens vers #id avec défilement fluide ; position: sticky; top: var(--header-height) ;
  * onglet actif souligné en rouge.
  */
-defineProps({
-  tabs: { type: Array, required: true },
-})
+export default {
+  name: 'BaseTabs',
+  props: {
+    tabs: { type: Array, required: true },
+  },
+}
 </script>
 
 <template>
