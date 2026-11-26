@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 300" role="img" aria-label="Pas d'affiche">
+  <rect width="200" height="300" fill="#171a20"/>
+  <g fill="none" stroke="#8b919c" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="62" y="112" width="76" height="64" rx="8"/>
+    <path d="M62 132h76M82 112l-8 20M104 112l-8 20M126 112l-8 20"/>
+  </g>
+  <text x="100" y="214" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="14" fill="#8b919c">Pas d'affiche</text>
+</svg>
