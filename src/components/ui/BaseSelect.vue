@@ -1,4 +1,4 @@
-<script setup>
+<script>
 /**
  * BaseSelect — liste déroulante réutilisable (Genre, Année, Trier par). S'utilise avec v-model.
  * Tâche FI2 · Sellé
@@ -6,12 +6,15 @@
  * Props : label, options = [{ value, label }], modelValue — Événement : update:modelValue
  * TODO FI2 : style de la maquette (52 px, surtitre 11 px majuscules, chevron, états).
  */
-defineProps({
-  label: { type: String, required: true },
-  options: { type: Array, required: true },
-  modelValue: { type: [String, Number, null], default: null },
-})
-defineEmits(['update:modelValue'])
+export default {
+  name: 'BaseSelect',
+  props: {
+    label: { type: String, required: true },
+    options: { type: Array, required: true },
+    modelValue: { type: [String, Number, null], default: null },
+  },
+  emits: ['update:modelValue'],
+}
 </script>
 
 <template>

@@ -1,4 +1,4 @@
-<script setup>
+<script>
 /**
  * CastCarousel — acteurs du film (photo, nom, rôle), dans un BaseCarousel. Non cliquables.
  * Tâche M8 · Sellé
@@ -7,9 +7,13 @@
  */
 import BaseCarousel from '@/components/ui/BaseCarousel.vue'
 
-defineProps({
-  cast: { type: Array, required: true },
-})
+export default {
+  name: 'CastCarousel',
+  components: { BaseCarousel },
+  props: {
+    cast: { type: Array, required: true },
+  },
+}
 </script>
 
 <template>

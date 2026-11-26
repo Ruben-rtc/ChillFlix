@@ -1,19 +1,23 @@
-<script setup>
+<script>
 /**
  * DetailBreadcrumb — Accueil > Résultats > Titre du film, + bouton Retour.
  * Tâche M4 · Arthur
  *
  * Props : title
- * TODO M4 : « Résultats » ramène à la dernière recherche (filtres conservés) ; Retour = router.back().
+ * TODO M4 : « Résultats » ramène à la dernière recherche (filtres conservés) ; Retour = this.$router.back().
  */
-defineProps({
-  title: { type: String, required: true },
-})
+export default {
+  name: 'DetailBreadcrumb',
+  props: {
+    title: { type: String, required: true },
+  },
+}
 </script>
 
 <template>
   <nav class="stub" aria-label="Fil d'Ariane">
-    <RouterLink to="/">Accueil</RouterLink> › Résultats › <span aria-current="page">{{ title }}</span>
+    <RouterLink to="/">Accueil</RouterLink> › Résultats ›
+    <span aria-current="page">{{ title }}</span>
   </nav>
 </template>
 

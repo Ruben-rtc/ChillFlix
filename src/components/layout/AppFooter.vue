@@ -1,10 +1,19 @@
-<script setup>
+<script>
 /**
  * AppFooter — pied de page avec la mention TMDB (obligatoire).
  * Tâche F4 · Sellé
  * Règles du logo : https://www.themoviedb.org/about/logos-attribution
  */
 import tmdbLogo from '@/assets/tmdb-logo.svg'
+
+export default {
+  name: 'AppFooter',
+  data() {
+    return {
+      tmdbLogo, // adresse de l'image, utilisée dans <img :src="tmdbLogo">
+    }
+  },
+}
 </script>
 
 <template>

@@ -1,23 +1,27 @@
-<script setup>
+<script>
 /**
  * ResultsHeader — « Résultats pour « dune » » + nombre de films.
  * Tâche R5 · Arthur
  *
  * Lit le store « search » (query, totalResults).
  */
-import { computed } from 'vue'
-import { storeToRefs } from 'pinia'
+import { mapState } from 'pinia'
 import { useSearchStore } from '@/stores/search'
 
-const searchStore = useSearchStore()
-const { query, totalResults } = storeToRefs(searchStore)
+export default {
+  name: 'ResultsHeader',
+  computed: {
+    // Lit query et totalResults dans le store : this.query, this.totalResults
+    ...mapState(useSearchStore, ['query', 'totalResults']),
 
-// « 1 film », « 42 films », « 12’345 films » (0 et 1 au singulier en français)
-const countLabel = computed(() => {
-  const n = totalResults.value
-  const word = n > 1 ? 'films' : 'film'
-  return `${n.toLocaleString('fr-CH')} ${word}`
-})
+    // « 1 film », « 42 films », « 12’345 films » (0 et 1 au singulier en français)
+    countLabel() {
+      const n = this.totalResults
+      const word = n > 1 ? 'films' : 'film'
+      return `${n.toLocaleString('fr-CH')} ${word}`
+    },
+  },
+}
 </script>
 
 <template>

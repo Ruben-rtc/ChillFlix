@@ -1,5 +1,8 @@
-<script setup>
+<script>
 /** Page 404 : adresse inconnue. */
+export default {
+  name: 'NotFoundView',
+}
 </script>
 
 <template>

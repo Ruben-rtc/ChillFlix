@@ -1,13 +1,16 @@
-<script setup>
+<script>
 /**
  * OverviewSection — infos détaillées : date de sortie, durée, genres, note et votes.
  * Tâche M6 · Arthur
  *
  * Props : movie (MovieDetail)
  */
-defineProps({
-  movie: { type: Object, required: true },
-})
+export default {
+  name: 'OverviewSection',
+  props: {
+    movie: { type: Object, required: true },
+  },
+}
 </script>
 
 <template>

@@ -1,4 +1,4 @@
-<script setup>
+<script>
 /**
  * ErrorState — « Impossible de charger les films » + bouton « Réessayer ».
  * Tâche R9 · Arthur
@@ -6,14 +6,17 @@
  * Affiché par SearchView quand store.error est rempli (API injoignable, wifi coupé…).
  * Props : message (détail technique, facultatif) — Événement : retry
  */
-defineProps({
-  message: { type: String, default: '' },
-})
-
-const emit = defineEmits(['retry'])
-
-function onRetryClick() {
-  emit('retry')
+export default {
+  name: 'ErrorState',
+  props: {
+    message: { type: String, default: '' },
+  },
+  emits: ['retry'],
+  methods: {
+    onRetryClick() {
+      this.$emit('retry')
+    },
+  },
 }
 </script>
 
